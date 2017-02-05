@@ -25,9 +25,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
+        loadData(refreshControl: refreshControl)
     }
 
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
+        loadData(refreshControl: refreshControl)
+    }
+    
+    func loadData(refreshControl: UIRefreshControl) {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
