@@ -12,22 +12,28 @@ import MBProgressHUD
 
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    let refreshControl = UIRefreshControl()
+    @IBAction func NetChange(_ sender: Any) {
+        loadData(refreshControl: refreshControl)
+    }
     @IBOutlet var tableView: UITableView!
-    
+    @IBOutlet var NetworkView: UIView!
     var movies: [NSDictionary]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NetworkView.isHidden = true
         tableView.dataSource = self
         tableView.delegate = self
-        let refreshControl = UIRefreshControl()
         // Do any additional setup after loading the view.
         
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
         loadData(refreshControl: refreshControl)
     }
-
+    
+    
+    
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
         loadData(refreshControl: refreshControl)
     }
@@ -44,14 +50,18 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             if let data = data {
                 if let responseDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
                     print(responseDictionary)
-                    MBProgressHUD.hide(for: self.view, animated: true)
                     self.movies = (responseDictionary["results"] as! [NSDictionary])
                     
                     self.tableView.reloadData()
                     refreshControl.endRefreshing()
+                    self.NetworkView.isHidden = true
                 }
             }
+            else {
+                self.NetworkView.isHidden = false
+            }
         }
+        MBProgressHUD.hide(for: self.view, animated: true)
         task.resume()
     }
     
