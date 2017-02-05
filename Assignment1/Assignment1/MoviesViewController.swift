@@ -20,6 +20,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(), for: UIControlEvents.valueChanged)
+        tableView.insertSubview(refreshControl, at: 0)
         // Do any additional setup after loading the view.
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
@@ -37,11 +40,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     self.movies = (responseDictionary["results"] as! [NSDictionary])
                     
                     self.tableView.reloadData()
+                    refreshControl.endRefreshing()
                 }
             }
         }
         task.resume()
-        
     }
 
     override func didReceiveMemoryWarning() {
