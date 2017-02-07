@@ -21,6 +21,8 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: false)
+        CollectionView.dataSource = self
+        
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         CollectionView.insertSubview(refreshControl, at: 0)
         loadData(refreshControl: refreshControl)
@@ -63,8 +65,8 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource{
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if movies! == movies! {
-            return (movies?.count)!
+        if let movies = movies {
+            return movies.count
         } else {
             return 0
         }
