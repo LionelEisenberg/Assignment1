@@ -1,8 +1,8 @@
 //
-//  MoviesViewController.swift
+//  CollectionViewController.swift
 //  Assignment1
 //
-//  Created by CS Student on 2/3/17.
+//  Created by CS Student on 2/6/17.
 //  Copyright © 2017 LionelEisenberg. All rights reserved.
 //
 
@@ -10,32 +10,26 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
 
-class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-    @IBOutlet var navItem: UINavigationItem!
+class CollectionViewController: UIViewController, UICollectionViewDataSource{
     let refreshControl = UIRefreshControl()
     
-    @IBAction func NetChange(_ sender: Any) {
-        loadData(refreshControl: refreshControl)
-    }
-    @IBOutlet var tableView: UITableView!
-    @IBOutlet var NetworkView: UIView!
+    @IBOutlet var NetworkView: UIControl!
+    @IBOutlet var CollectionView: UICollectionView!
+    @IBOutlet var navItem: UINavigationItem!
     var movies: [NSDictionary]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: false)
-        NetworkView.isHidden = true
-        tableView.dataSource = self
-        tableView.delegate = self
-        // Do any additional setup after loading the view.
-        
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
-        tableView.insertSubview(refreshControl, at: 0)
+        CollectionView.insertSubview(refreshControl, at: 0)
         loadData(refreshControl: refreshControl)
     }
-    
-    
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
         loadData(refreshControl: refreshControl)
@@ -55,7 +49,7 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
                     print(responseDictionary)
                     self.movies = (responseDictionary["results"] as! [NSDictionary])
                     
-                    self.tableView.reloadData()
+                    self.CollectionView.reloadData()
                     refreshControl.endRefreshing()
                     self.NetworkView.isHidden = true
                 }
@@ -68,33 +62,25 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
         task.resume()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let movies = movies {
-            return movies.count
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if movies! == movies! {
+            return (movies?.count)!
         } else {
             return 0
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! CollectionViewCell
         let movie = movies![indexPath.row]
-        let title = movie["title"] as! String
-        let overview = movie["overview"] as! String
         let posterPath = movie["poster_path"] as! String
         let baseUrl = "https://image.tmdb.org/t/p/w500"
         let imageUrl = NSURL(string: baseUrl + posterPath)
         
         cell.posterView.setImageWith(imageUrl as! URL)
-        cell.titleLabel.text = title
-        cell.overviewLabel.text = overview
         return cell
     }
+
     /*
     // MARK: - Navigation
 
