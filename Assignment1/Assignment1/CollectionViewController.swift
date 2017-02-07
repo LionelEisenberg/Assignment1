@@ -13,7 +13,6 @@ import MBProgressHUD
 class CollectionViewController: UIViewController, UICollectionViewDataSource{
     let refreshControl = UIRefreshControl()
     
-    @IBOutlet var NetworkView: UIControl!
     @IBOutlet var CollectionView: UICollectionView!
     @IBOutlet var navItem: UINavigationItem!
     var movies: [NSDictionary]?
@@ -53,11 +52,9 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource{
                     
                     self.CollectionView.reloadData()
                     refreshControl.endRefreshing()
-                    self.NetworkView.isHidden = true
                 }
             }
             else {
-                self.NetworkView.isHidden = false
             }
         }
         MBProgressHUD.hide(for: self.view, animated: true)

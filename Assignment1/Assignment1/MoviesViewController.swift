@@ -10,8 +10,11 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
 
-class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 
+    var searched = false
+    
+    @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var navItem: UINavigationItem!
     let refreshControl = UIRefreshControl()
     
@@ -21,11 +24,14 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet var tableView: UITableView!
     @IBOutlet var NetworkView: UIView!
     var movies: [NSDictionary]?
+    var movieData: [String] = []
+    var filteredData: [String]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: false)
         NetworkView.isHidden = true
+        searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
         // Do any additional setup after loading the view.
@@ -38,6 +44,7 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
     
     
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
+        searched = false
         loadData(refreshControl: refreshControl)
     }
     
@@ -52,9 +59,12 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
         let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             if let data = data {
                 if let responseDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
-                    print(responseDictionary)
                     self.movies = (responseDictionary["results"] as! [NSDictionary])
-                    
+                    for i in 0 ..< (self.movies?.count)! {
+                        let movie = self.movies![i]
+                        let movieTitle = movie["title"] as! String
+                        self.movieData.append(movieTitle)
+                    }
                     self.tableView.reloadData()
                     refreshControl.endRefreshing()
                     self.NetworkView.isHidden = true
@@ -65,6 +75,7 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
             }
         }
         MBProgressHUD.hide(for: self.view, animated: true)
+        filteredData = movieData
         task.resume()
     }
     
@@ -74,6 +85,17 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if(searched) {
+            print("\nSearched\n\\n\n\n")
+            if let filteredData = filteredData {
+                return filteredData.count
+            }
+            else {
+                print("returned 0 for num of cells")
+                return 0
+            }
+        }
+        
         if let movies = movies {
             return movies.count
         } else {
@@ -82,6 +104,12 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (searched) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as UITableViewCell
+            cell.textLabel?.text = filteredData?[indexPath.row]
+            return cell
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
         let movie = movies![indexPath.row]
         let title = movie["title"] as! String
@@ -95,6 +123,17 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
         cell.overviewLabel.text = overview
         return cell
     }
+    
+    
+    
+    func searchBar(_ searchBar:UISearchBar, textDidChange searchText: String) {
+        searched = true
+        filteredData = searchText.isEmpty ? movieData : movieData.filter({(dataString: String) -> Bool in
+            return dataString.range(of: searchText, options: .caseInsensitive) != nil
+        })
+    tableView.reloadData()
+    }
+
     /*
     // MARK: - Navigation
 
