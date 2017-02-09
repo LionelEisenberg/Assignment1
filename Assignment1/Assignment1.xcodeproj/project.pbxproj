@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4358D0122CB04E26084A443D /* Pods_Assignment1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9690AC7FC6845BAE341369D /* Pods_Assignment1.framework */; };
+		BC3484F61E4A8F870054EFFE /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3484F51E4A8F870054EFFE /* DetailViewController.swift */; };
 		BC69366C1E4929830006C51C /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC69366B1E4929830006C51C /* CollectionViewController.swift */; };
 		BC871F9E1E454690000F5958 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC871F9D1E454690000F5958 /* AppDelegate.swift */; };
 		BC871FA31E454691000F5958 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC871FA11E454691000F5958 /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BC3484F51E4A8F870054EFFE /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		BC69366B1E4929830006C51C /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		BC871F9A1E454690000F5958 /* Assignment1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assignment1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC871F9D1E454690000F5958 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 		BC871FB41E4681AB000F5958 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				BC3484F51E4A8F870054EFFE /* DetailViewController.swift */,
 				BC871FAF1E454900000F5958 /* MoviesViewController.swift */,
 			);
 			name = ViewController;
@@ -247,6 +250,7 @@
 				BCDB149F1E494B1D0018AC1B /* CollectionViewCell.swift in Sources */,
 				BC69366C1E4929830006C51C /* CollectionViewController.swift in Sources */,
 				BC871F9E1E454690000F5958 /* AppDelegate.swift in Sources */,
+				BC3484F61E4A8F870054EFFE /* DetailViewController.swift in Sources */,
 				BC871FB01E454900000F5958 /* MoviesViewController.swift in Sources */,
 				BC871FB81E4686C5000F5958 /* MovieCell.swift in Sources */,
 			);
