@@ -15,8 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        print("b4Window")
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
+        print("afterWindow")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let nowPlayingNavigationalController = storyboard.instantiateViewController(withIdentifier: "MoviesNavigationController") as! UINavigationController
         let nowPlayingController = nowPlayingNavigationalController.topViewController as! MoviesViewController
@@ -32,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarController.viewControllers = [nowPlayingNavigationalController, topRatedViewController]
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
+        
         return true
     }
 

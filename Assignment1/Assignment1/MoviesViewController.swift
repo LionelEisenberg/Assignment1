@@ -46,6 +46,7 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
     
     func loadData(refreshControl: UIRefreshControl) {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
+        if let endPoint = endPoint {
         let url = URL(string: "https://api.themoviedb.org/3/movie/\(endPoint)?api_key=\(apiKey)")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
@@ -68,6 +69,7 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
         }
         MBProgressHUD.hide(for: self.view, animated: true)
         task.resume()
+        }
     }
     
     override func didReceiveMemoryWarning() {
