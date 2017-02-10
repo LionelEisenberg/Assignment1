@@ -113,7 +113,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <view alpha="0.80000000000000004" contentMode="scaleToFill" misplaced="YES" id="aob-cv-8cL">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="232"/>
+                                        <rect key="frame" x="0.0" y="506" width="320" height="232"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xmK-Qr-YW2">
@@ -154,7 +154,7 @@
         <!--Navigation Controller-->
         <scene sceneID="OJx-rK-CYR">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iSt-mE-cry" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MoviesNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="iSt-mE-cry" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="UxJ-sr-rhz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

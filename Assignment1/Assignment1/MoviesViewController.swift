@@ -12,10 +12,7 @@ import MBProgressHUD
 
 class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 
-    var searched = false
-    
     @IBOutlet var searchBar: UISearchBar!
-    @IBOutlet var navItem: UINavigationItem!
     let refreshControl = UIRefreshControl()
     
     @IBAction func NetChange(_ sender: Any) {
@@ -25,6 +22,7 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet var NetworkView: UIView!
     var movies: [NSDictionary]?
     var filteredData: [NSDictionary]?
+    var endPoint: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,13 +41,12 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
     
     
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
-        searched = false
         loadData(refreshControl: refreshControl)
     }
     
     func loadData(refreshControl: UIRefreshControl) {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endPoint)?api_key=\(apiKey)")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         
