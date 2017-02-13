@@ -93,14 +93,13 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
         let movie = filteredData![indexPath.row]
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
-        
         let baseUrl = "https://image.tmdb.org/t/p/w500"
-        
         if let posterPath = movie["poster_path"] as? String {
-            
             let imageUrl = NSURL(string: baseUrl + posterPath)
             cell.posterView.setImageWith(imageUrl as! URL)
         }
+        
+        cell.contentView.alpha = 0
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
         return cell
@@ -144,6 +143,14 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
         detailViewController.hidesBottomBarWhenPushed = true
         
        }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+         UIView.animate(withDuration: 0.8, animations: {
+         cell.contentView.alpha = 1.0
+         })
+ 
+        
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if(!isMoreDataLoading){
