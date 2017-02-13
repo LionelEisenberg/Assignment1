@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         topRatedNavigationalController.tabBarItem.title = "Top Rated"
         
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [nowPlayingNavigationalController, topRatedViewController]
+        tabBarController.viewControllers = [nowPlayingNavigationalController, topRatedNavigationalController]
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         
