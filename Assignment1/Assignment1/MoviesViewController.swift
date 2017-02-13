@@ -23,6 +23,8 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
     var movies: [NSDictionary]?
     var filteredData: [NSDictionary]?
     var endPoint: String!
+    var offset: Int = 0
+    var isMoreDataLoading = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +49,7 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
     func loadData(refreshControl: UIRefreshControl) {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         if let endPoint = endPoint {
-        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endPoint)?api_key=\(apiKey)")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endPoint)?api_key=\(apiKey)&offset=\(offset*20)")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         
@@ -59,6 +61,7 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
                     self.movies = (responseDictionary["results"] as! [NSDictionary])
                     self.filteredData = self.movies
                     self.tableView.reloadData()
+                    self.isMoreDataLoading = false
                     refreshControl.endRefreshing()
                     self.NetworkView.isHidden = true
                 }
@@ -131,6 +134,9 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let cell = sender as! UITableViewCell
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.lightGray
+        cell.selectedBackgroundView = backgroundView
         let indexPath = tableView.indexPath(for: cell)
         let movie = movies![indexPath!.row]
         let detailViewController = segue.destination as! DetailViewController
@@ -138,4 +144,17 @@ class MoviesViewController:UIViewController, UITableViewDataSource, UITableViewD
         detailViewController.hidesBottomBarWhenPushed = true
         
        }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if(!isMoreDataLoading){
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+                isMoreDataLoading = true
+                offset += 1
+                loadData(refreshControl: refreshControl)
+            }
+        }
+    }
+
 }
