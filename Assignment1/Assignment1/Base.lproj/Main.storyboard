@@ -45,7 +45,7 @@
                                         <rect key="frame" x="0.0" y="52" width="320" height="133"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vyV-ps-CoI" id="qa3-kF-ZVm">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="132"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="133"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nZg-cd-CGR">
@@ -96,7 +96,7 @@
             </objects>
             <point key="canvasLocation" x="610" y="172"/>
         </scene>
-        <!--Detail View Controller-->
+        <!--Information-->
         <scene sceneID="Poa-Xa-fRl">
             <objects>
                 <viewController id="5ZQ-bL-SgB" customClass="DetailViewController" customModule="Assignment1" customModuleProvider="target" sceneMemberID="viewController">
@@ -138,7 +138,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="2H8-DJ-3yf"/>
+                    <navigationItem key="navigationItem" title="Information" id="2H8-DJ-3yf"/>
                     <connections>
                         <outlet property="infoView" destination="aob-cv-8cL" id="9sV-nv-7wt"/>
                         <outlet property="overviewLabel" destination="HhI-lQ-4aO" id="o5a-IV-OyB"/>
