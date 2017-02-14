@@ -15,6 +15,8 @@ class DetailViewController: UIViewController {
     @IBOutlet var overviewLabel: UILabel!
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var infoView: UIView!
+    @IBOutlet var voterLabel: UILabel!
+    @IBOutlet var isAdultImage: UIImageView!
     
     var movie: NSDictionary!
     
@@ -24,7 +26,16 @@ class DetailViewController: UIViewController {
         
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
+        let release_date = movie["release_date"] as! String
+        let childFriendly = movie["adult"] as! Bool
         titleLabel.text = title
+        voterLabel.text = release_date
+        if childFriendly == true{
+            isAdultImage.image = UIImage(named:"Cross")
+        } else {
+            isAdultImage.image = UIImage(named:"Check")
+        }
+            
         overviewLabel.text = overview
         overviewLabel.sizeToFit()
         
